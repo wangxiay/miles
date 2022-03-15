@@ -1,0 +1,70 @@
+#include<stdio.h>
+ #include <windows.h>
+char a[9][12]={
+                "*#*********",
+				"***###*###*",
+				"###**#****#",
+				"*#**###**#*",
+				"***********",
+				"#####*##*##",
+				"**#*****#*E",
+				"***#*###**#",
+				"*#*********",};
+void di_tu()
+{int i,j;
+  for(i=0;i<9;i++)
+  {
+  	
+     for(j=0;j<12;j++)
+     {printf("%c",a[i][j]);}
+     printf("\n" ); 
+  }
+}
+void zuo_biao(int x,int y)
+{
+	COORD pos;
+	pos.X=x;
+	pos.Y=y;printf("X=%d,Y=%d\n",x,y);
+	SetConsoleCursorPosition(GetStdHandle( STD_OUTPUT_HANDLE ) ,pos);
+    
+}
+	int curX,curY;
+int main()
+{
+
+	   while(1)
+	 {
+	 		int t;
+	 		 system("cls");
+	 	    	di_tu();
+	zuo_biao(curX,curY);
+	 	scanf("%c",&t);
+       
+    
+ if(t=='w')
+{
+//向上走
+	if((curY-1)>=0&&(a[curY-1][curX]=='*'||a[curY-1][curX]=='E')) curY--;
+}
+else if(t=='s')
+{
+//向下走
+	if((curY+1)<9&&(a[curY+1][curX]=='*'||a[curY+1][curX]=='E')) curY++;
+}
+else if(t=='a')
+{
+//向左走
+	if((curX-1)>=0&& (a[curY][curX-1]=='*'||a[curY][curX-1]=='E')) curX--;
+}
+else if(t=='d')
+{
+	//向右走
+if((curX+1)<11&& (a[curY][curX+1]=='*'||a[curY][curX+1]=='E')) curX++;
+}
+   if(a[curY][curX]=='E')
+{
+ printf("oh,you are so smart!\n");
+ break;
+   }
+}
+}
