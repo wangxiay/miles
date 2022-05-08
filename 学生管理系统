@@ -1,0 +1,97 @@
+#include<stdio.h>
+struct student
+{
+	int xue_hao;
+	char name[10];
+	int age;
+	struct student *next; 
+};
+int main()
+{
+	printf("欢迎来到学生管理系统\n");
+	printf("如果你想录入学生信息请输入 1 \n");
+	printf("如果你想查询学生信息请输入 2 \n");
+	printf("如果你想删除学生信息请输入 3 \n");
+	printf("如果你想打印学生信息请输入 4 \n"); 
+	printf("如果你想退出学生管理系统请输入 5 \n");
+	int xuan_ze;
+	int n=0;
+	int xuehao;
+	int curnode3=0,curnode4;
+	int curnode=0,x;
+	scanf("%d",&xuan_ze);
+	struct student s[50];
+	struct student *cha_zhao;
+	while(xuan_ze!=5)
+	{ 
+		switch(xuan_ze)
+		{
+			case 1: printf("请输入学生信息\n");
+					printf("学号：");scanf("%d",&s[n].xue_hao);
+	 				printf("名字：");scanf("%s",&s[n].name);
+					printf("年龄：");scanf("%d",&s[n].age);
+					cha_zhao=&s[curnode];
+					n++;
+					s[n-1].next =&s[n];
+					s[n].next =NULL;
+					curnode3++;
+					scanf("%d",&xuan_ze);break;
+			case 2:	printf("请输入你想查找的学生的学号:\n");
+					scanf("%d",&xuehao);
+					while(cha_zhao!=NULL) 
+					{
+						if(cha_zhao->xue_hao ==xuehao)
+						{
+							printf("学号：%d 姓名： %s 年龄： %d\n",cha_zhao->xue_hao ,cha_zhao->name ,cha_zhao->age );
+							cha_zhao=&s[curnode];break;
+						}
+						else
+						{
+							cha_zhao=cha_zhao->next ;
+						}
+					}
+					if(cha_zhao==NULL)
+					{
+						printf("查无此人\n");
+						cha_zhao=&s[curnode];
+					}
+					scanf("%d",&xuan_ze);break;
+			case 3:printf("请输入你想要删除学生的学号:\n");
+					scanf("%d",&xuehao); 
+					for(int i=0;cha_zhao!=NULL;i++)
+					{
+						if(cha_zhao->xue_hao ==xuehao)
+						{
+							printf("已删除\n"); 
+							curnode3--;
+							if(i==0)
+							{
+								curnode++;
+								cha_zhao=&s[curnode]; 
+							}
+							else
+							{
+								x=n-1-curnode3+i;
+								s[x-1].next =&s[x+1];
+								s[x].next =NULL;
+							}
+						}
+						cha_zhao=cha_zhao->next ;
+					}
+					cha_zhao=&s[curnode];
+					scanf("%d",&xuan_ze);break;
+			case 4:printf("打印结果为：\n");
+					curnode4=0;
+					while(cha_zhao!=NULL&&curnode4<curnode3)
+					{
+						printf("学号：%d 姓名：%s 年龄：%d\n",cha_zhao->xue_hao ,cha_zhao->name ,cha_zhao->age );
+						cha_zhao=cha_zhao->next ;
+						curnode4++;
+					}
+					cha_zhao=&s[curnode];
+					scanf("%d",&xuan_ze);break;
+			default:printf("请输入1~5的数字\n");scanf("%d",&xuan_ze);
+		} 
+	}
+	return 0;
+}
