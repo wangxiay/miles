@@ -1,0 +1,44 @@
+#include <stdio.h>
+typedef struct Country
+{
+	char name[100];
+	int jp;
+	int yp;
+	int tp;
+	int zs;
+}Country;
+int main()
+{
+	FILE *infp=fopen("./file.txt","r");
+	if(infp==NULL)
+	{
+		printf("Error");
+		return 0;
+	}
+	Country c[8];
+	int i=0;
+	while(fscanf(infp,"%s\t%d\t%d\t%d\t%d",c[i].name ,&c[i].jp ,&c[i].yp ,&c[i].tp ,&c[i].zs )!=EOF)
+	{
+		i++;
+	}
+	fclose(infp);
+	for(int i=0;i<9;i++)
+	{
+		for(int j=0;j<9-i;j++)
+		{
+			if(c[j].jp >c[j+1].jp )
+			{
+				Country curnode=c[j];
+				c[j]=c[j+1];
+				c[j+1]=curnode;
+			}
+		}
+	}
+	FILE *outfp=fopen("./file_sorted.txt","w");
+	for(int i=0;i<8;i++)
+	{
+		fprintf(outfp,"%s\t%d\t%d\t%d\t%d",c[i].name ,c[i].jp ,c[i].yp ,c[i].tp ,c[i].zs );
+	}
+	fclose(outfp);
+	return 0;
+}
